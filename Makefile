@@ -4,8 +4,8 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # docker
-docker-cmd: install-package settings run-server
-docker-uwsgi-cmd: install-mysql install-package settings run-uwsgi
+docker-cmd: install-package settings collect-static run-server
+docker-uwsgi-cmd: install-mysql install-package settings collect-static run-uwsgi
 
 
 # install
@@ -26,6 +26,9 @@ install-mysql:
 install-package:
 	@pipenv install --dev
 	@pipenv update --dev
+
+collect-static:
+	@pipenv run python src/manage.py collectstatic
 
 # run
 run-server:
