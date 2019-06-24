@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  jun2-mariadb:
+    image: mariadb:10.4
+    container_name: jun2-mariadb
+    restart: always
+    volumes:
+      - ./.tmp/mysql:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: jun2
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: test
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci
+
+  jun2:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: jun2
+    restart: always
+    volumes:
+      - .:/htdocs/www
+    depends_on:
+      - jun2-mariadb
+    links:
+      - jun2-mariadb
+    command: ['./docs/dev/wait_for_it.sh', 'mysqladmin ping -h jun2-mariadb -u root -proot', 'make docker-cmd']
+
+  jun2-nginx:
+    image: nginx:stable
+    container_name: jun2-nginx
+    restart: always
+    volumes:
+      - ./docs/dev/nginx:/etc/nginx/conf.d:ro
+      - ./docs/dev/cert:/etc/nginx/cert/:ro
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - jun2
+    links:
+      - jun2
