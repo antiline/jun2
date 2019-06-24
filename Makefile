@@ -21,7 +21,7 @@ cert:
 	&& openssl x509 -req -days 3650 -in dev.csr -signkey dev.key -out dev.crt
 
 install-mysql:
-	@apt update && apt install -y mysql-server
+	@apt update && apt install -y mysql-server libmysqlclient-dev
 
 install-package:
 	@pipenv install --dev
