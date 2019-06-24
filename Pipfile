@@ -9,6 +9,7 @@ name = "pypi"
 mysqlclient = "*"
 django-ipware = "*"
 django-cors-headers = "*"
+uwsgi = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

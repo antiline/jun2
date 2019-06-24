@@ -4,7 +4,8 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # docker
-docker-cmd: package-install settings runserver
+docker-cmd: package-install settings run-server
+docker-uwsgi-cmd: package-install settings run-uwsgi
 
 
 # install
@@ -24,9 +25,11 @@ package-install:
 	@pipenv update --dev
 
 # run
-runserver:
-	pipenv run python src/manage.py runserver 0.0.0.0:8000
+run-server:
+	@pipenv run python src/manage.py runserver 0.0.0.0:8000
 
+run-uwsgi:
+	@pipenv run uwsgi --ini /htdocs/www/docs/uwsgi/jun2.ini
 
 # test
 test:
