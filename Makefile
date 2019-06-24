@@ -5,7 +5,7 @@ help:
 
 # docker
 docker-cmd: install-package settings collect-static run-server
-docker-uwsgi-cmd: install-mysql install-package settings collect-static run-uwsgi
+docker-uwsgi-cmd: install-mysql install-package collect-static run-uwsgi
 
 
 # install
