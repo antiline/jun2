@@ -4,8 +4,8 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 # docker
-docker-cmd: package-install settings run-server
-docker-uwsgi-cmd: package-install settings run-uwsgi
+docker-cmd: install-package settings run-server
+docker-uwsgi-cmd: install-mysql install-package settings run-uwsgi
 
 
 # install
@@ -20,7 +20,10 @@ cert:
 	&& openssl req -new -newkey rsa:2048 -nodes -keyout dev.key -out dev.csr -subj "/C=KR/ST=Seoul/L=Gang-nam/O=SecureSign Inc/OU=Dev Team/CN=example.com" \
 	&& openssl x509 -req -days 3650 -in dev.csr -signkey dev.key -out dev.crt
 
-package-install:
+install-mysql:
+	@apt update && apt install -y mysql-server
+
+install-package:
 	@pipenv install --dev
 	@pipenv update --dev
 
