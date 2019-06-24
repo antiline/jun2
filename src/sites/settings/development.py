@@ -6,7 +6,7 @@ DEBUG = True
 
 setup_logging(DEBUG)
 
-ALLOWED_HOSTS = ['127.0.0.1', ]
+ALLOWED_HOSTS = ['127.0.0.1', 'jun2.org', ]
 
 # django-debug-toolbar
 DEBUG_TOOLBAR_CONFIG = {

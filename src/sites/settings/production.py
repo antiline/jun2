@@ -6,4 +6,4 @@ DEBUG = False
 
 setup_logging(DEBUG)
 
-ALLOWED_HOSTS = ['127.0.0.1', ]
+ALLOWED_HOSTS = ['jun2.org', ]
