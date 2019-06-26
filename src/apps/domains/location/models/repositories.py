@@ -15,7 +15,7 @@ class GpxPointRepository(BaseRepository):
     def find_by_user_and_term(
             cls, user: User, start_record_time: Optional[datetime], end_record_time: Optional[datetime]
     ) -> List[GpxPoint]:
-        qs = cls.model_class.objects.filter(user=user)
+        qs = cls.model_class.objects.filter(user=user).order_by('record_time')
 
         if start_record_time:
             qs.filter(record_time__gte=start_record_time)
