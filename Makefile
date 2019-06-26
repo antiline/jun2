@@ -5,7 +5,7 @@ help:
 
 # docker
 docker-cmd: install-package settings collect-static run-server
-docker-uwsgi-cmd: install-mysql install-package collect-static run-uwsgi
+docker-uwsgi-cmd: install-mysql install-package collect-static migrate run-uwsgi
 
 
 # install
@@ -29,6 +29,9 @@ install-package:
 
 collect-static:
 	@pipenv run python src/manage.py collectstatic --no-input --clear
+
+migrate:
+	@pipenv run python src/manage.py migrate
 
 # run
 run-server:
