@@ -1,5 +1,3 @@
-import hashlib
-
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.db.models import Manager
@@ -28,16 +26,9 @@ class EqualizeMixin:
                 setattr(self, field, getattr(other, field))
 
 
-class BaseModel(EqualizeMixin, models.Model):
-    create_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='등록일')
-    update_time = models.DateTimeField(auto_now=True, verbose_name='수정일')
-
-    objects = Manager()
-
-    equal_fields = ()
-
-    class Meta:
-        abstract = True
+class ChangeMixin:
+    def change(self, *args, **kwargs) -> bool:
+        return False
 
     def _change(self, **kwargs):
         is_changed = False
@@ -50,6 +41,18 @@ class BaseModel(EqualizeMixin, models.Model):
             is_changed = True
 
         return is_changed
+
+
+class BaseModel(EqualizeMixin, ChangeMixin, models.Model):
+    create_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='등록일')
+    update_time = models.DateTimeField(auto_now=True, verbose_name='수정일')
+
+    objects = Manager()
+
+    equal_fields = ()
+
+    class Meta:
+        abstract = True
 
 
 class BaseUserModel(BaseModel, AbstractBaseUser):
