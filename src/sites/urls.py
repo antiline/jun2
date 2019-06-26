@@ -1,12 +1,14 @@
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic import RedirectView
 
-from apps.domains.hello_world import urls as hello_world_urls
+from apps.domains.home import urls as home_urls
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/home/', permanent=False), name='index'),
     path('internal-admin/', admin.site.urls),
-    path('hello-world/', include(hello_world_urls, namespace='hello_world')),
+    path('home/', include(home_urls, namespace='home')),
 ]
 
 if settings.DEBUG:
