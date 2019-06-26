@@ -12,6 +12,7 @@ django-cors-headers = "*"
 uwsgi = "*"
 gpxpy = "*"
 requests = "*"
+filelock = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

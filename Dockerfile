@@ -1,7 +1,7 @@
 FROM python:3.6
 
 RUN apt update \
-    && apt install -y mysql-server \
+    && apt install -y mysql-server default-libmysqlclient-dev \
     && rm -rf /var/lib/apt/lists/* \
     && pip3 install pip --upgrade \
     && pip3 install pipenv
