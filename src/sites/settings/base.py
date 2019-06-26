@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Apps
-    'apps.domains.home',
+    'apps.domains.home.apps.HomeConfig',
+    'apps.domains.location.apps.LocationConfig',
 ]
 
 MIDDLEWARE = [
