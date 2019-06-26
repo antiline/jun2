@@ -38,6 +38,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'libs.django.admin.middlewares.AdminIPRestrictorMiddleware',
 ]
 
 ROOT_URLCONF = 'sites.urls'
@@ -101,6 +102,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Security
+
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOW_CREDENTIALS = True
 
@@ -112,6 +114,12 @@ X_FRAME_OPTIONS = 'DENY'
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# Admin
+
+RESTRICT_ADMIN = True
+ALLOWED_ADMIN_IPS = ['127.0.0.1', '::1']
+ALLOWED_ADMIN_IP_RANGES = ['127.0.0.0/24', '192.168.0.0/16', '172.16.0.0/12', '::/1']
+RESTRICTED_APP_NAMES = ['admin']
 
 # Static files (CSS, JavaScript, Images)
 
