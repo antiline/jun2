@@ -11,6 +11,7 @@ django-ipware = "*"
 django-cors-headers = "*"
 uwsgi = "*"
 gpxpy = "*"
+requests = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
