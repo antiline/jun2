@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from apps.domains.location.models.models import Gpx
+from apps.domains.location.models.models import GpxPoint
 
 
-@admin.register(Gpx)
+@admin.register(GpxPoint)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('user', 'record_time', 'latitude', 'longitude', 'elevation', 'created', 'last_modified',)
+    list_display = ('user', 'record_time', 'latitude', 'longitude', 'elevation', 'create_time', 'update_time',)
     list_display_links = ('user', 'record_time',)
-    list_filter = ('record_time', 'last_modified',)
+    list_filter = ('record_time', 'update_time',)
     search_fields = ('user',)
