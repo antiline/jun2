@@ -28,7 +28,7 @@ install-package:
 	@pipenv update --dev
 
 collect-static:
-	@pipenv run python src/manage.py collectstatic
+	@pipenv run python src/manage.py collectstatic --no-input --clear
 
 # run
 run-server:
