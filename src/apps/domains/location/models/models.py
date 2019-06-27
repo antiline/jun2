@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from django.contrib.auth.models import User
 from django.db import models
@@ -11,7 +12,7 @@ class GpxPoint(BaseModel):
     record_time = models.DateTimeField(null=False, verbose_name='기록 시간')
     latitude = models.FloatField(null=False, verbose_name='latitude')
     longitude = models.FloatField(null=False, verbose_name='longitude')
-    elevation = models.FloatField(null=False, verbose_name='elevation')
+    elevation = models.FloatField(null=True, blank=True, verbose_name='elevation')
 
     class Meta:
         db_table = 'gpx_point'
@@ -19,7 +20,7 @@ class GpxPoint(BaseModel):
         verbose_name_plural = 'GPX Point 리스트'
         unique_together = (('user', 'record_time'),)
 
-    def change(self, latitude: float, longitude: float, elevation: float):
+    def change(self, latitude: float, longitude: float, elevation: Optional[float]):
         return self._change(latitude=latitude, longitude=longitude, elevation=elevation)
 
 
