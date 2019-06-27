@@ -2,6 +2,8 @@ from admin_ip_restrictor.middleware import AdminIPRestrictorMiddleware as BaseAd
 from django.conf import settings
 from ipware import get_client_ip
 
+from libs.log.logger import logger
+
 
 class AdminIPRestrictorMiddleware(BaseAdminIPRestrictorMiddleware):
     def __init__(self, get_response=None):
@@ -11,4 +13,5 @@ class AdminIPRestrictorMiddleware(BaseAdminIPRestrictorMiddleware):
 
     def get_ip(self, request):
         client_ip, _ = get_client_ip(request, self.allowed_admin_proxy_count)
+        logger.info(client_ip)
         return client_ip
