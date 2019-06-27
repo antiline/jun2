@@ -18,10 +18,10 @@ class GpxPointRepository(BaseRepository):
         qs = cls.model_class.objects.filter(user=user).order_by('record_time')
 
         if start_record_time:
-            qs.filter(record_time__gte=start_record_time)
+            qs = qs.filter(record_time__gte=start_record_time)
 
         if end_record_time:
-            qs.filter(record_time__lte=end_record_time)
+            qs = qs.filter(record_time__lte=end_record_time)
 
         return qs
 
