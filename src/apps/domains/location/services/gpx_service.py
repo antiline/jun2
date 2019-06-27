@@ -9,7 +9,7 @@ from apps.domains.location.models.repositories import GpxPointRepository
 
 class GpxService:
     @classmethod
-    def get_gpx(cls, user: User, start_record_time: datetime, end_record_time: datetime) -> gpxpy.gpx.GPX:
+    def get_gpx(cls, user: User, start_record_time: datetime, end_record_time: datetime, reduce=True) -> gpxpy.gpx.GPX:
         gpx = gpxpy.gpx.GPX()
 
         # Create first track in our GPX:
@@ -24,5 +24,8 @@ class GpxService:
         points = GpxPointRepository.find_by_user_and_term(user, start_record_time, end_record_time)
         for point in points:
             gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(point.latitude, point.longitude, point.elevation, point.record_time))
+
+        if reduce:
+            gpx.reduce_points(min_distance=1)
 
         return gpx
