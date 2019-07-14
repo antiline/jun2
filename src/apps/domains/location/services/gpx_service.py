@@ -27,5 +27,6 @@ class GpxService:
 
         if reduce:
             gpx.reduce_points(min_distance=1)
+            gpx.simplify()
 
         return gpx
