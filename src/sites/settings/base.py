@@ -1,4 +1,10 @@
+import logging
 import os
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+from sentry_sdk.integrations.excepthook import ExcepthookIntegration
+from sentry_sdk.integrations.logging import LoggingIntegration
 
 from infras.secrets.constants import SecretKey
 from libs.secrets.secrets import Secrets
@@ -119,7 +125,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 RESTRICT_ADMIN = True
 ALLOWED_ADMIN_IPS = ['127.0.0.1', '::1']
 ALLOWED_ADMIN_IP_RANGES = ['127.0.0.0/24', '192.168.0.0/16', '172.16.0.0/12', '::/1']
-ALLOWED_ADMIN_PROXY_COUNT = 2
+ALLOWED_ADMIN_PROXY_COUNT = 1
 RESTRICTED_APP_NAMES = ['admin']
 
 # Static files (CSS, JavaScript, Images)
@@ -127,3 +133,10 @@ RESTRICTED_APP_NAMES = ['admin']
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/src', ),)
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/dist')
+
+# Sentry
+
+sentry_sdk.init(
+    dsn=Secrets.get(SecretKey.SENTRY_DSN),
+    integrations=[DjangoIntegration(), ExcepthookIntegration(always_run=True), LoggingIntegration(logging.INFO, logging.ERROR), ]
+)

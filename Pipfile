@@ -14,6 +14,7 @@ gpxpy = "*"
 requests = "*"
 filelock = "*"
 django-admin-ip-restrictor = "*"
+sentry-sdk = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
