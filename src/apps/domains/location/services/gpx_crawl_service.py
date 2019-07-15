@@ -1,9 +1,12 @@
 import gpxpy
 import gpxpy.gpx
 import requests
+from requests import RequestException
+from sentry_sdk import capture_message
 
 from apps.domains.location.models.models import GpxCrawlStatus
 from apps.domains.location.models.repositories import GpxCrawlStatusRepository, GpxPointRepository
+from libs.base.exceptions import NetworkException
 
 
 class GpxCrawlService:
@@ -11,13 +14,18 @@ class GpxCrawlService:
     def crawl_all(cls):
         gpx_crawl_status_list = GpxCrawlStatusRepository.find_avail_all()
         for gpx_crawl_status in gpx_crawl_status_list:
-            # TODO: Need exception handling to run continue.
             cls.crawl(gpx_crawl_status)
 
     @classmethod
     def crawl(cls, gpx_crawl_status: GpxCrawlStatus):
         user = gpx_crawl_status.user
-        gpx = gpxpy.parse(cls._get_gpx_data(gpx_crawl_status.crawl_url))
+
+        try:
+            gpx = gpxpy.parse(cls._get_gpx_data(gpx_crawl_status.crawl_url))
+
+        except (NetworkException, ValueError) as e:
+            capture_message(e)
+            return
 
         for track in gpx.tracks:
             for segment in track.segments:
@@ -37,4 +45,10 @@ class GpxCrawlService:
     @classmethod
     def _get_gpx_data(cls, url) -> str:
         response = requests.get(url)
+
+        try:
+            response.raise_for_status()
+        except RequestException as e:
+            raise NetworkException from e
+
         return response.text
