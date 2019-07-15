@@ -46,8 +46,8 @@ test:
 
 # pre-processing
 lint:
-	@pylint ./src/ --rcfile=.pylintrc
-	@flake8
+	@pipenv run pylint ./src/ --rcfile=.pylintrc
+	@pipenv run flake8
 
 # docker
 docker-up:
