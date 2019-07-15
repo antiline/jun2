@@ -4,6 +4,7 @@ from libs.log.setup import setup_logging
 # pylint:disable=wildcard-import, unused-wildcard-import
 # noinspection PyUnresolvedReferences
 from .base import *
+
 DEBUG = True
 
 setup_logging(DEBUG)
