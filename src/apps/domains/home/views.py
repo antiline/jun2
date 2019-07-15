@@ -3,5 +3,6 @@ from django.views import View
 
 
 class HomeIndexView(View):
-    def get(self, request):
+    @staticmethod
+    def get(request):
         return render(request, 'home/index.html', {})

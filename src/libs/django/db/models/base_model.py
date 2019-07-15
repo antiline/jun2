@@ -27,9 +27,6 @@ class EqualizeMixin:
 
 
 class ChangeMixin:
-    def change(self, *args, **kwargs) -> bool:
-        return False
-
     def _change(self, **kwargs):
         is_changed = False
 

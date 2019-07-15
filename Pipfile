@@ -19,6 +19,8 @@ sentry-sdk = "*"
 [dev-packages]
 django-debug-toolbar = "*"
 v = {editable = true,version = "*"}
+flake8 = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.6"
