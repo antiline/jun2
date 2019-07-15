@@ -52,6 +52,9 @@ docker-up:
 docker-rebuild-up:
 	@docker-compose up --force-recreate --build
 
+docker-shell:
+	@docker-compose exec jun2 /bin/bash
+
 docker-kill-all:
 	@docker ps -a -q | xargs docker rm -f
 
