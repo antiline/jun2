@@ -54,3 +54,6 @@ docker-rebuild-up:
 
 docker-kill-all:
 	@docker ps -a -q | xargs docker rm -f
+
+docker-logs:
+	@docker-compose logs -f jun2
