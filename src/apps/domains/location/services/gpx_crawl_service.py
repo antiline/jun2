@@ -7,6 +7,7 @@ from sentry_sdk import capture_message
 from apps.domains.location.models.models import GpxCrawlStatus
 from apps.domains.location.models.repositories import GpxCrawlStatusRepository, GpxPointRepository
 from libs.base.exceptions import NetworkException
+from libs.decorators.retry import retry
 
 
 class GpxCrawlService:
@@ -43,6 +44,7 @@ class GpxCrawlService:
                         gpx.save()
 
     @classmethod
+    @retry()
     def _get_gpx_data(cls, url) -> str:
         response = requests.get(url)
 
