@@ -9,8 +9,8 @@ from sentry_sdk.integrations.logging import LoggingIntegration
 from infras.secrets.constants import SecretKey
 from libs.secrets.secrets import Secrets
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
+BASE_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = Secrets.get(SecretKey.SECRET_KEY)
@@ -53,7 +53,7 @@ WSGI_APPLICATION = 'sites.wsgi.application'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
+        'DIRS': [os.path.join(BASE_PATH, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,8 +131,8 @@ RESTRICTED_APP_NAMES = ['admin']
 # Static files (CSS, JavaScript, Images)
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/src', ),)
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/dist')
+STATICFILES_DIRS = (os.path.join(BASE_PATH, 'static/src', ),)
+STATIC_ROOT = os.path.join(BASE_PATH, 'static/dist')
 
 # Sentry
 
