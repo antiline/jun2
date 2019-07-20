@@ -8,6 +8,8 @@ from apps.domains.location.models.repositories import ExtractGpsFromExifStatusRe
 
 
 class ExtractGpsFromExifService:
+    ALLOW_EXTENSIONS = ['.jpg']
+
     @classmethod
     def extract_all(cls):
         status_list = ExtractGpsFromExifStatusRepository.find_avail_all()
@@ -18,6 +20,10 @@ class ExtractGpsFromExifService:
     def extract_by_status(cls, status: ExtractGpsFromExifStatus):
         for (path, _, filenames) in os.walk(status.image_path):
             for filename in filenames:
+                ext = os.path.splitext(filename)[1]
+                if ext not in cls.ALLOW_EXTENSIONS:
+                    continue
+
                 cls.extract_from_file(status.user, os.path.join(path, filename))
 
     @classmethod
