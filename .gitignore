@@ -112,3 +112,4 @@ venv.bak/
 
 # temp
 .tmp
+/mount/
