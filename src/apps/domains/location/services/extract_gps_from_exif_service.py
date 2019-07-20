@@ -21,7 +21,7 @@ class ExtractGpsFromExifService:
         for (path, _, filenames) in os.walk(status.image_path):
             for filename in filenames:
                 ext = os.path.splitext(filename)[1]
-                if ext not in cls.ALLOW_EXTENSIONS:
+                if ext.lower() not in cls.ALLOW_EXTENSIONS:
                     continue
 
                 cls.extract_from_file(status.user, os.path.join(path, filename))
