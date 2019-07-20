@@ -61,6 +61,10 @@ class BaseRepository:
         return cls.model_class.objects.get_or_create(defaults=defaults, **kwargs)
 
     @classmethod
+    def update_or_create(cls, defaults: Optional[Dict] = None, **kwargs):
+        return cls.model_class.objects.update_or_create(defaults=defaults, **kwargs)
+
+    @classmethod
     def roll(cls, stop_condition_lambda: Callable, limit: int = DEFAULT_LIMIT):
         entities = cls.find(0, limit)
         target_ids = []
