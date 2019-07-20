@@ -10,7 +10,7 @@ from infras.secrets.constants import SecretKey
 from libs.secrets.secrets import Secrets
 
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-ROOT_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
+ROOT_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 MOUNT_PATH = os.path.join(ROOT_PATH, 'mount')
 
 # SECURITY WARNING: keep the secret key used in production secret!
