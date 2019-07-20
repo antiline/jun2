@@ -11,7 +11,7 @@ class RelativeFilePathField(FilePathField):
 
         return os.path.join(self.path, value[1:] if value[0] == '/' else value)
 
-    def get_db_prep_value(self, value, connection, prepared = False):
+    def get_db_prep_value(self, value, connection, prepared=False):
         if value is None:
             return None
 
