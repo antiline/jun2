@@ -51,7 +51,7 @@ class GpxCrawlStatus(BaseModel):
         verbose_name_plural = 'GPX Crawl Status 리스트'
 
 
-class ExtractGpsOnExifStatus(BaseModel):
+class ExtractGpsFromExifStatus(BaseModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='user')
     is_active = models.BooleanField(null=False, default=True, verbose_name='활성화 여부')
     image_path = models.FilePathField(
@@ -59,7 +59,7 @@ class ExtractGpsOnExifStatus(BaseModel):
     )
 
     class Meta:
-        db_table = 'extract_gps_on_exif_status'
+        db_table = 'extract_gps_from_exif_status'
         verbose_name = 'Exif 에서 GPS 정보 가져오기 상태'
         verbose_name_plural = 'Exif 에서 GPS 정보 가져오기 상태 리스트'
 

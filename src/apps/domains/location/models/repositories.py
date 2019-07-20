@@ -4,7 +4,7 @@ from uuid import UUID
 
 from django.contrib.auth.models import User
 
-from apps.domains.location.models.models import GpxCrawlStatus, GpxPoint, GpxShare
+from apps.domains.location.models.models import GpxCrawlStatus, GpxPoint, GpxShare, ExtractGpsFromExifStatus
 from libs.django.db.models.base_repository import BaseRepository
 
 
@@ -40,3 +40,11 @@ class GpxShareRepository(BaseRepository):
     @classmethod
     def get_by_uuid(cls, uuid: UUID) -> GpxShare:
         return cls.model_class.objects.get(share_uuid=uuid)
+
+
+class ExtractGpsFromExifStatusRepository(BaseRepository):
+    model_class = ExtractGpsFromExifStatus
+
+    @classmethod
+    def find_avail_all(cls) -> List[ExtractGpsFromExifStatus]:
+        return cls.model_class.objects.filter(is_active=True)
