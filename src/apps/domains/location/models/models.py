@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
+from libs.django.db.fields import RelativeFilePathField
 from libs.django.db.models.base_model import BaseModel
 
 
@@ -54,7 +55,7 @@ class GpxCrawlStatus(BaseModel):
 class ExtractGpsFromExifStatus(BaseModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='user')
     is_active = models.BooleanField(null=False, default=True, verbose_name='활성화 여부')
-    image_path = models.FilePathField(
+    image_path = RelativeFilePathField(
         path=settings.MOUNT_PATH, allow_folders=True, allow_files=False, recursive=True, verbose_name='Image 경로'
     )
 
@@ -62,4 +63,3 @@ class ExtractGpsFromExifStatus(BaseModel):
         db_table = 'extract_gps_from_exif_status'
         verbose_name = 'Exif 에서 GPS 정보 가져오기 상태'
         verbose_name_plural = 'Exif 에서 GPS 정보 가져오기 상태 리스트'
-
