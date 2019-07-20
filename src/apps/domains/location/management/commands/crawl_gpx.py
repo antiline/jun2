@@ -3,8 +3,8 @@ from libs.django.command import CommonBaseCommand
 
 
 class Command(CommonBaseCommand):
-    title = 'check operation queue'
-    help = 'check operation queue'
+    title = 'Crawl gpx'
+    help = 'Crawl gpx'
 
     def run(self, *args, **options):
         GpxCrawlService.crawl_all()
