@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.domains.location.models.models import GpxCrawlStatus, GpxPoint, GpxShare
+from apps.domains.location.models.models import GpxCrawlStatus, GpxPoint, GpxShare, ExtractGpsOnExifStatus
 
 
 @admin.register(GpxPoint)
@@ -23,5 +23,13 @@ class GpxShareAdmin(admin.ModelAdmin):
 class GpxCrawlStatusAdmin(admin.ModelAdmin):
     list_display = ('user', 'crawl_url', 'is_active', 'create_time', 'update_time',)
     list_display_links = ('user', 'crawl_url',)
+    list_filter = ('is_active',)
+    search_fields = ('user',)
+
+
+@admin.register(ExtractGpsOnExifStatus)
+class ExtractGpsOnExifStatusAdmin(admin.ModelAdmin):
+    list_display = ('user', 'image_path', 'is_active', 'create_time', 'update_time',)
+    list_display_links = ('user', 'image_path',)
     list_filter = ('is_active',)
     search_fields = ('user',)

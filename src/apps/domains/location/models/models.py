@@ -1,6 +1,7 @@
 import uuid
 from typing import Optional
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -48,3 +49,17 @@ class GpxCrawlStatus(BaseModel):
         db_table = 'gpx_crawl_status'
         verbose_name = 'GPX Crawl Status'
         verbose_name_plural = 'GPX Crawl Status 리스트'
+
+
+class ExtractGpsOnExifStatus(BaseModel):
+    user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='user')
+    is_active = models.BooleanField(null=False, default=True, verbose_name='활성화 여부')
+    image_path = models.FilePathField(
+        path=settings.MOUNT_PATH, allow_folders=True, allow_files=False, recursive=True, verbose_name='Image 경로'
+    )
+
+    class Meta:
+        db_table = 'extract_gps_on_exif_status'
+        verbose_name = 'Exif 에서 GPS 정보 가져오기 상태'
+        verbose_name_plural = 'Exif 에서 GPS 정보 가져오기 상태 리스트'
+
