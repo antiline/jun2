@@ -4,6 +4,7 @@ import requests
 from requests import RequestException
 from sentry_sdk import capture_message
 
+from apps.domains.location.constants import GpxPointRefType
 from apps.domains.location.models.models import GpxCrawlStatus
 from apps.domains.location.models.repositories import GpxCrawlStatusRepository, GpxPointRepository
 from libs.base.exceptions import NetworkException
@@ -35,12 +36,13 @@ class GpxCrawlService:
                         'latitude': point.latitude,
                         'longitude': point.longitude,
                         'elevation': point.elevation,
+                        'ref_type': GpxPointRefType.GPX
                     }, )
 
                     if created:
                         continue
 
-                    if gpx.change(point.latitude, point.longitude, point.elevation):
+                    if gpx.change(point.latitude, point.longitude, point.elevation, GpxPointRefType.GPX):
                         gpx.save()
 
     @classmethod

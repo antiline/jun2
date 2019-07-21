@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 
+from apps.domains.location.constants import GpxPointRefType
 from libs.django.db.fields import RelativeFilePathField
 from libs.django.db.models.base_model import BaseModel
 
@@ -15,6 +16,7 @@ class GpxPoint(BaseModel):
     latitude = models.FloatField(null=False, verbose_name='latitude')
     longitude = models.FloatField(null=False, verbose_name='longitude')
     elevation = models.FloatField(null=True, blank=True, verbose_name='elevation')
+    ref_type = models.IntegerField(choices=GpxPointRefType.get_choices(), verbose_name='Point reference 타입', )
 
     class Meta:
         db_table = 'gpx_point'
@@ -22,8 +24,8 @@ class GpxPoint(BaseModel):
         verbose_name_plural = 'GPX Point 리스트'
         unique_together = (('user', 'record_time'),)
 
-    def change(self, latitude: float, longitude: float, elevation: Optional[float]):
-        return self._change(latitude=latitude, longitude=longitude, elevation=elevation)
+    def change(self, latitude: float, longitude: float, elevation: Optional[float], ref_type: int):
+        return self._change(latitude=latitude, longitude=longitude, elevation=elevation, ref_type=ref_type)
 
 
 class GpxShare(BaseModel):

@@ -2,6 +2,7 @@ import os
 
 from django.contrib.auth.models import User
 
+from apps.domains.location.constants import GpxPointRefType
 from apps.domains.location.helpers.exif_helper import ExifHelper, ExifParseException
 from apps.domains.location.models.models import ExtractGpsFromExifStatus
 from apps.domains.location.models.repositories import ExtractGpsFromExifStatusRepository, GpxPointRepository
@@ -37,4 +38,5 @@ class ExtractGpsFromExifService:
             'latitude': latitude,
             'longitude': longitude,
             'elevation': altitude,
+            'ref_type': GpxPointRefType.EXIF,
         }, )
