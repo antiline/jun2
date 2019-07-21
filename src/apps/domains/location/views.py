@@ -39,8 +39,12 @@ class GpxFileView(View):
         if not form.is_valid():
             return HttpResponseBadRequest()
 
-        gpx = GpxService.get_gpx(request.user, form.cleaned_data['start_time'], form.cleaned_data['end_time'])
-        return HttpResponse(gpx.to_xml())
+        start_time, end_time = form.cleaned_data['start_time'], form.cleaned_data['end_time']
+        gpx = GpxService.get_gpx(request.user, start_time, end_time)
+
+        response = HttpResponse(gpx.to_xml(), content_type='text/plain')
+        response['Content-Disposition'] = f'attachment; filename="{start_time}-{end_time}.gpx"'
+        return response
 
 
 class GpxShareView(View):
@@ -54,4 +58,7 @@ class GpxShareFileView(View):
     @staticmethod
     def get(request, share_uuid):
         gpx = GpxShareService.get_gpx_by_uuid(share_uuid)
-        return HttpResponse(gpx.to_xml())
+
+        response = HttpResponse(gpx.to_xml(), content_type='text/plain')
+        response['Content-Disposition'] = f'attachment; filename="{share_uuid}.gpx"'
+        return response
