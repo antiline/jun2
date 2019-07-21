@@ -16,6 +16,7 @@ filelock = "*"
 django-admin-ip-restrictor = "*"
 sentry-sdk = "*"
 piexif = "*"
+django-filter = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
