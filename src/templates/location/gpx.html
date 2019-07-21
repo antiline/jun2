@@ -58,7 +58,6 @@
         },
       }).on('loaded', function (e) {
         var gpx = e.target;
-        console.log(gpx.getBounds());
         map.fitBounds(gpx.getBounds());
       }).addTo(map);
     }
