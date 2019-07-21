@@ -30,7 +30,7 @@ class GpxPoint(BaseModel):
 
 class GpxShare(BaseModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='user')
-    share_uuid = models.UUIDField(unique=True, default=uuid.uuid4(), verbose_name='공유 UUID')
+    share_uuid = models.UUIDField(unique=True, default=uuid.uuid4, verbose_name='공유 UUID')
     is_active = models.BooleanField(null=False, default=True, verbose_name='활성화 여부')
     start_record_time = models.DateTimeField(null=False, verbose_name='오픈 시작 기록 시간')
     end_record_time = models.DateTimeField(
