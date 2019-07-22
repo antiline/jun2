@@ -29,6 +29,9 @@ class ExifHelper:
 
     @classmethod
     def parse_gps_datetime(cls, gps: Dict) -> datetime:
+        if piexif.GPSIFD.GPSDateStamp not in gps or piexif.GPSIFD.GPSTimeStamp not in gps:
+            raise ExifParseException
+
         gps_datestamp = gps[piexif.GPSIFD.GPSDateStamp]
         year, month, day = list(map(int, gps_datestamp.decode().split(':')))
 
@@ -42,7 +45,7 @@ class ExifHelper:
     @classmethod
     def parse_latitude(cls, gps: Dict) -> Optional[float]:
         if piexif.GPSIFD.GPSLatitude not in gps:
-            return None
+            raise ExifParseException
 
         latitude = gps[piexif.GPSIFD.GPSLatitude]
         direction = -1 if gps[piexif.GPSIFD.GPSLatitudeRef] == 'W' else 1
@@ -54,7 +57,7 @@ class ExifHelper:
     @classmethod
     def parse_longitude(cls, gps: Dict) -> Optional[float]:
         if piexif.GPSIFD.GPSLongitude not in gps:
-            return None
+            raise ExifParseException
 
         longitude = gps[piexif.GPSIFD.GPSLongitude]
         direction = -1 if gps[piexif.GPSIFD.GPSLongitudeRef] == 'S' else 1
