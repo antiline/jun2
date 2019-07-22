@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-from typing import Dict, Tuple, List
+from typing import Dict, Tuple, List, Optional
 
 import piexif
 
@@ -28,7 +28,7 @@ class ExifHelper:
         return rational[0] / rational[1]
 
     @classmethod
-    def parse_gps_datetime(cls, gps: Dict):
+    def parse_gps_datetime(cls, gps: Dict) -> datetime:
         gps_datestamp = gps[piexif.GPSIFD.GPSDateStamp]
         year, month, day = list(map(int, gps_datestamp.decode().split(':')))
 
@@ -40,7 +40,10 @@ class ExifHelper:
         return datetime(year, month, day, hour, minute, second, tzinfo=timezone.utc)
 
     @classmethod
-    def parse_latitude(cls, gps: Dict) -> float:
+    def parse_latitude(cls, gps: Dict) -> Optional[float]:
+        if piexif.GPSIFD.GPSLatitude not in gps:
+            return None
+
         latitude = gps[piexif.GPSIFD.GPSLatitude]
         direction = -1 if gps[piexif.GPSIFD.GPSLatitudeRef] == 'W' else 1
         return round(
@@ -49,7 +52,10 @@ class ExifHelper:
         )
 
     @classmethod
-    def parse_longitude(cls, gps: Dict) -> float:
+    def parse_longitude(cls, gps: Dict) -> Optional[float]:
+        if piexif.GPSIFD.GPSLongitude not in gps:
+            return None
+
         longitude = gps[piexif.GPSIFD.GPSLongitude]
         direction = -1 if gps[piexif.GPSIFD.GPSLongitudeRef] == 'S' else 1
         return round(
@@ -58,13 +64,16 @@ class ExifHelper:
         )
 
     @classmethod
-    def parse_altitude(cls, gps: Dict) -> float:
+    def parse_altitude(cls, gps: Dict) -> Optional[float]:
+        if piexif.GPSIFD.GPSAltitude not in gps:
+            return None
+
         altitude = gps[piexif.GPSIFD.GPSAltitude]
         direction = -1 if gps[piexif.GPSIFD.GPSAltitudeRef] > 1 else 1
         return round(cls.rational2float(altitude) * direction, cls.ROUND_NDIGITS)
 
     @classmethod
-    def parse_gps_data(cls, filepath: str) -> Tuple:
+    def parse_gps_data(cls, filepath: str) -> Tuple[datetime, Optional[float], Optional[float], Optional[float]]:
         exif = piexif.load(filepath)
         if 'GPS' not in exif:
             raise ExifParseException
