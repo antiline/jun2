@@ -72,7 +72,12 @@ class ExifHelper:
             return None
 
         altitude = gps[piexif.GPSIFD.GPSAltitude]
-        direction = -1 if gps[piexif.GPSIFD.GPSAltitudeRef] > 1 else 1
+        altitude_ref = gps[piexif.GPSIFD.GPSAltitudeRef]
+        if isinstance(gps[piexif.GPSIFD.GPSAltitudeRef], tuple):
+            altitude_ref = int(cls.rational2float(gps[piexif.GPSIFD.GPSAltitudeRef]))
+
+        direction = -1 if altitude_ref > 1 else 1
+
         return round(cls.rational2float(altitude) * direction, cls.ROUND_NDIGITS)
 
     @classmethod
