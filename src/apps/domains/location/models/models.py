@@ -57,9 +57,7 @@ class GpxCrawlStatus(BaseModel):
 class ExtractGpsFromExifStatus(BaseModel):
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='user')
     is_active = models.BooleanField(null=False, default=True, verbose_name='활성화 여부')
-    image_path = RelativeFilePathField(
-        path=settings.MOUNT_PATH, allow_folders=True, allow_files=False, recursive=True, verbose_name='Image 경로'
-    )
+    image_path = models.TextField(verbose_name='Image 경로')
 
     class Meta:
         db_table = 'extract_gps_from_exif_status'
