@@ -7,6 +7,7 @@ from sentry_sdk.integrations.excepthook import ExcepthookIntegration
 from sentry_sdk.integrations.logging import LoggingIntegration
 
 from infras.secrets.constants import SecretKey
+from libs.log.sentry import before_send
 from libs.secrets.secrets import Secrets
 
 BASE_PATH = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -137,7 +138,8 @@ STATIC_ROOT = os.path.join(BASE_PATH, 'static/dist')
 
 # Sentry
 
+SENTRY_IGNORE_ERRORS = (OSError, )
 sentry_sdk.init(
-    dsn=Secrets.get(SecretKey.SENTRY_DSN),
+    dsn=Secrets.get(SecretKey.SENTRY_DSN), before_send=before_send,
     integrations=[DjangoIntegration(), ExcepthookIntegration(always_run=True), LoggingIntegration(logging.INFO, logging.ERROR), ]
 )
