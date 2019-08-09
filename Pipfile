@@ -17,6 +17,7 @@ django-admin-ip-restrictor = "*"
 sentry-sdk = "*"
 piexif = "*"
 django-filter = "*"
+django-csp = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

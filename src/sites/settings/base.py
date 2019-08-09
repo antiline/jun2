@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'libs.django.admin.middlewares.AdminIPRestrictorMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'sites.urls'
@@ -121,6 +122,9 @@ X_FRAME_OPTIONS = 'DENY'
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
+
+CSP_DEFAULT_SRC = ("'self'", )
+
 
 # Admin
 
